@@ -132,7 +132,8 @@ function App() {
     normalizedPath.includes('blog-manager') ||
     (normalizedPath.includes('blogs/new') || normalizedPath.includes('blogs/edit')) ||
     normalizedPath.includes('push') ||
-    normalizedPath.startsWith('/l/'); // Hide Main Nav for Landing Pages
+    normalizedPath.startsWith('/l/') ||
+    normalizedPath.includes('/apply/audit'); // Hide Main Nav for Landing Pages and Audit Funnel
 
   return (
     <ThemeProvider>
@@ -150,8 +151,8 @@ function App() {
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<RootRedirect />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="/terms" element={<TermsPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-policy" element={<TermsPage />} />
             <Route path="/contact" element={<ContactPage />} />
 
             <Route path="/blogs" element={<PublicBlogListPage />} />
