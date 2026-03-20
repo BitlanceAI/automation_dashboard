@@ -45,7 +45,6 @@ import TestimonialDemo from './pages/TestimonialDemo';
 import VoiceBotFeaturesPage from './pages/VoiceBotFeaturesPage';
 import BlogAgentFeaturesPage from './pages/BlogAgentFeaturesPage';
 import ContactPage from './pages/ContactPage';
-import ThankYouPage from './pages/ThankYouPage';
 
 
 
@@ -167,6 +166,8 @@ function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-policy" element={<TermsPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/text-generator" element={<TextGeneratorPage />} />
+            <Route path="/email-generator" element={<EmailGeneratorPage />} />
 
             <Route path="/blogs" element={<PublicBlogListPage />} />
 
