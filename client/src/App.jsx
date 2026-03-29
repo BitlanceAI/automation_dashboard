@@ -43,6 +43,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsPage from './pages/TermsPage';
 import TestimonialDemo from './pages/TestimonialDemo';
 import ThankYouPage from './pages/ThankYouPage';
+import QuizLandingPage from './pages/QuizLandingPage';
 import VoiceBotFeaturesPage from './pages/VoiceBotFeaturesPage';
 import BlogAgentFeaturesPage from './pages/BlogAgentFeaturesPage';
 import ContactPage from './pages/ContactPage';
@@ -62,6 +63,7 @@ import BlogEditorPage from './pages/BlogEditorPage';
 
 import CookieDemoPage from './pages/CookieDemoPage';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { WorkspaceProvider } from './context/WorkspaceContext';
 import AuthGuard from './components/auth/AuthGuard';
 import AdminGuard from './components/admin/AdminGuard';
 import { Toaster } from 'react-hot-toast';
@@ -144,11 +146,13 @@ function App() {
     (normalizedPath.includes('blogs/new') || normalizedPath.includes('blogs/edit')) ||
     normalizedPath.includes('push') ||
     normalizedPath.startsWith('/l/') ||
-    normalizedPath.includes('/apply/audit'); // Hide Main Nav for Landing Pages and Audit Funnel
+    normalizedPath.includes('/apply/audit') ||
+    normalizedPath.includes('/apply'); // Hide Main Nav for Landing Pages and Audit Funnel
 
   return (
     <ThemeProvider>
       <AuthProvider>
+        <WorkspaceProvider>
         <Toaster position="top-right" reverseOrder={false} />
         <div className={isDashboard ? 'bg-gray-50 dark:bg-slate-900 min-h-screen transition-colors duration-300' : 'bg-gray-50 dark:bg-slate-900 min-h-screen transition-colors duration-300'}>
 
@@ -281,6 +285,7 @@ function App() {
             <Route path="/l/offer/:campaignId" element={<OfferLanding />} />
             {/* General Lead Gen Custom Funnel */}
             <Route path="/apply/audit" element={<RealEstateLeadGen />} />
+            <Route path="/apply" element={<QuizLandingPage />} />
             <Route path="/thank-you" element={<ThankYouPage />} />
 
             <Route path="/testimonial-demo" element={<TestimonialDemo />} />
@@ -321,6 +326,7 @@ function App() {
           {!isDashboard && location.pathname !== '/' && <Footer />}
 
         </div>
+        </WorkspaceProvider>
       </AuthProvider>
     </ThemeProvider >
   );
