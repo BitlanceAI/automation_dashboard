@@ -13,6 +13,7 @@ import LandingPage from './pages/LandingPage';
 
 
 import AgentsPage from './pages/AgentsPage';
+import MetaAdsPage from './pages/MetaAdsPage';
 import BroadcastPage from './pages/BroadcastPage';
 import SalesDashboard from './pages/SalesDashboard';
 import SocialDashboard from './pages/SocialDashboard';
@@ -24,21 +25,7 @@ import SignupPage from './pages/SignupPage';
 import AdminDashboard from './pages/AdminDashboard';
 import ClientHistoryPage from './pages/ClientHistoryPage';
 import GraphicDesignerPage from './pages/GraphicDesignerPage';
-// import MetaAdsPage from './pages/MetaAdsPage'; // replaced by multipage layout
-import MetaAdsLayout from './pages/meta/MetaAdsLayout';
-import MetaOverviewPage from './pages/meta/MetaOverviewPage';
-import MetaCampaignsPage from './pages/meta/MetaCampaignsPage';
-import MetaScheduledPostsPage from './pages/meta/MetaScheduledPostsPage';
-import MetaInternalCampaignsPage from './pages/meta/MetaInternalCampaignsPage';
-import MetaSettingsPage from './pages/meta/MetaSettingsPage';
 import CampaignManagerPage from './pages/CampaignManagerPage';
-// Landing Pages
-import AwarenessLanding from './pages/landing/AwarenessLanding';
-import TrafficLanding from './pages/landing/TrafficLanding';
-import LeadGenLanding from './pages/landing/LeadGenLanding';
-import SalesLanding from './pages/landing/SalesLanding';
-import OfferLanding from './pages/landing/OfferLanding';
-import RealEstateLeadGen from './pages/landing/RealEstateLeadGen';
 import CampaignWizard from './components/campaigns/CampaignWizard';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsPage from './pages/TermsPage';
@@ -49,7 +36,8 @@ import VoiceBotFeaturesPage from './pages/VoiceBotFeaturesPage';
 import BlogAgentFeaturesPage from './pages/BlogAgentFeaturesPage';
 import ContactPage from './pages/ContactPage';
 import TextGeneratorPage from './pages/TextGeneratorPage';
-import EmailGeneratorPage from './pages/EmailGeneratorPage';// ... existing imports
+import EmailGeneratorPage from './pages/EmailGeneratorPage';
+import EmailAutomationPage from './pages/EmailAutomationPage';
 
 
 
@@ -62,8 +50,10 @@ import BlogManagerPage from './pages/BlogManagerPage';
 import BlogEditorPage from './pages/BlogEditorPage';
 
 
-import CookieDemoPage from './pages/CookieDemoPage';
-import ESignDemoPage from './pages/ESignDemoPage';
+import ESignPage from './pages/ESignDemoPage';
+import ESignCompletePage from './pages/ESignCompletePage';
+import DigiLockerCompletePage from './pages/DigiLockerCompletePage';
+import PaymentCompletePage from './pages/PaymentCompletePage';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { WorkspaceProvider } from './context/WorkspaceContext';
 import AuthGuard from './components/auth/AuthGuard';
@@ -155,180 +145,170 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <WorkspaceProvider>
-        <Toaster position="top-right" reverseOrder={false} />
-        <div className={isDashboard ? 'bg-gray-50 dark:bg-slate-900 min-h-screen transition-colors duration-300' : 'bg-gray-50 dark:bg-slate-900 min-h-screen transition-colors duration-300 pb-20 md:pb-0'}>
-          {/* First-visit splash screen — hidden on dashboard/admin routes */}
-          <SplashScreen />
+          <Toaster position="top-right" reverseOrder={false} />
+          <div className={isDashboard ? 'bg-gray-50 dark:bg-slate-900 min-h-screen transition-colors duration-300' : 'bg-gray-50 dark:bg-slate-900 min-h-screen transition-colors duration-300 pb-20 md:pb-0'}>
+            {/* First-visit splash screen — hidden on dashboard/admin routes */}
+            <SplashScreen />
 
 
-          {/* Temporary Debug Banner
+            {/* Temporary Debug Banner
           <div className="fixed top-0 left-0 bg-red-500 text-white z-[100] text-xs p-1">
             Path: {location.pathname} | isDashboard: {isDashboard.toString()}
           </div> 
           */}
-          {!isDashboard && <Navbar />}
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<RootRedirect />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/terms-policy" element={<TermsPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/text-generator" element={<TextGeneratorPage />} />
-            <Route path="/email-generator" element={<EmailGeneratorPage />} />
+            {!isDashboard && <Navbar />}
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<RootRedirect />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-policy" element={<TermsPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/text-generator" element={<TextGeneratorPage />} />
+              <Route path="/email-generator" element={<EmailGeneratorPage />} />
 
-            <Route path="/blogs" element={<PublicBlogListPage />} />
+              <Route path="/blogs" element={<PublicBlogListPage />} />
 
-            <Route path="/blogs/:id" element={<PublicArticlePage />} />
-            <Route path="/login" element={
-              <PublicRoute>
-                <LoginPage />
-              </PublicRoute>
-            } />
-            <Route path="/signup" element={
-              <PublicRoute>
-                <SignupPage />
-              </PublicRoute>
-            } />
+              <Route path="/blogs/:id" element={<PublicArticlePage />} />
+              <Route path="/login" element={
+                <PublicRoute>
+                  <LoginPage />
+                </PublicRoute>
+              } />
+              <Route path="/signup" element={
+                <PublicRoute>
+                  <SignupPage />
+                </PublicRoute>
+              } />
 
-            <Route path="/cookie-demo" element={<CookieDemoPage />} />
-            <Route path="/esign-demo" element={<ESignDemoPage />} />
+              <Route path="/esign" element={<ESignPage />} />
+              <Route path="/esign-demo" element={<ESignPage />} />
+              <Route path="/esign/complete" element={<ESignCompletePage />} />
+              <Route path="/digilocker/complete" element={<DigiLockerCompletePage />} />
+              <Route path="/payment/complete" element={<PaymentCompletePage />} />
 
-            {/* Push & Blog Routes */}
-            <Route path="/push/send" element={
-              <AuthGuard>
-                <PushNotificationPage />
-              </AuthGuard>
-            } />
-
-            <Route path="/home" element={
-              <AuthGuard>
-                <HomePage />
-              </AuthGuard>
-            } />
-            <Route path="/agents" element={
-              <AgentsPage onAgentSelect={handleAgentSelect} />
-            } />
-            <Route path="/dashboard/agents/social" element={
-              <AuthGuard>
-                <BroadcastPage />
-              </AuthGuard>
-            } />
-            <Route path="/SocialDashboard" element={
-              <AuthGuard>
-                <SocialDashboard />
-              </AuthGuard>
-            } />
-            <Route path="/dashboard/agents/voice" element={
-              <AuthGuard>
-                <SalesDashboard />
-              </AuthGuard>
-            } />
-            <Route path="/dashboard/agents/seo" element={
-              <AuthGuard>
-                <SeoAgentPage />
-              </AuthGuard>
-            } />
-            <Route path="/dashboard/agents/blog" element={
-              <AuthGuard>
-                <BlogPage />
-              </AuthGuard>
-            } />
-            <Route path="/dashboard/agents/design" element={
-              <AuthGuard>
-                <GraphicDesignerPage />
-              </AuthGuard>
-            } />
-            {/* Meta Ads — multipage layout */}
-            <Route
-              path="/dashboard/agents/meta"
-              element={
+              {/* Push & Blog Routes */}
+              <Route path="/push/send" element={
                 <AuthGuard>
-                  <MetaAdsLayout />
+                  <PushNotificationPage />
                 </AuthGuard>
-              }
-            >
-              <Route index element={<MetaOverviewPage />} />
-              <Route path="campaigns" element={<MetaCampaignsPage />} />
-              <Route path="posts" element={<MetaScheduledPostsPage />} />
-              <Route path="internal" element={<MetaInternalCampaignsPage />} />
-              <Route path="settings" element={<MetaSettingsPage />} />
-            </Route>
-            <Route path="/settings" element={
-              <AuthGuard>
-                <SettingsPage />
-              </AuthGuard>
-            } />
-            <Route path="/admin" element={
-              // TODO: Add AdminGuard
-              <AuthGuard>
-                <AdminDashboard />
-              </AuthGuard>
-            } />
-            <Route path="/admin/client/:id" element={
-              <AuthGuard>
-                <ClientHistoryPage />
-              </AuthGuard>
-            } />
-            <Route path="/admin/campaigns" element={
-              <AuthGuard>
-                <CampaignManagerPage />
-              </AuthGuard>
-            } />
-            <Route path="/admin/campaigns/new" element={
-              <AuthGuard>
-                <CampaignWizard />
-              </AuthGuard>
-            } />
+              } />
 
-            {/* Landing Page Routes (No Auth Guard) */}
-            <Route path="/l/awareness/:campaignId" element={<AwarenessLanding />} />
-            <Route path="/l/traffic/:campaignId" element={<TrafficLanding />} />
-            <Route path="/l/leadgen/:campaignId" element={<LeadGenLanding />} />
-            <Route path="/l/sales/:campaignId" element={<SalesLanding />} />
-            <Route path="/l/offer/:campaignId" element={<OfferLanding />} />
-            {/* General Lead Gen Custom Funnel */}
-            <Route path="/apply/audit" element={<RealEstateLeadGen />} />
-            <Route path="/apply" element={<QuizLandingPage />} />
-            <Route path="/thank-you" element={<ThankYouPage />} />
+              <Route path="/home" element={
+                <AuthGuard>
+                  <HomePage />
+                </AuthGuard>
+              } />
+              <Route path="/agents" element={
+                <AgentsPage onAgentSelect={handleAgentSelect} />
+              } />
+              <Route path="/dashboard/agents/social" element={
+                <AuthGuard>
+                  <BroadcastPage />
+                </AuthGuard>
+              } />
+              <Route path="/SocialDashboard" element={
+                <AuthGuard>
+                  <SocialDashboard />
+                </AuthGuard>
+              } />
+              <Route path="/dashboard/agents/voice" element={
+                <AuthGuard>
+                  <SalesDashboard />
+                </AuthGuard>
+              } />
+              <Route path="/dashboard/agents/seo" element={
+                <AuthGuard>
+                  <SeoAgentPage />
+                </AuthGuard>
+              } />
+              <Route path="/dashboard/agents/blog" element={
+                <AuthGuard>
+                  <BlogPage />
+                </AuthGuard>
+              } />
+              <Route path="/dashboard/agents/design" element={
+                <AuthGuard>
+                  <GraphicDesignerPage />
+                </AuthGuard>
+              } />
+              <Route path="/dashboard/agents/meta" element={
+                <AuthGuard>
+                  <MetaAdsPage />
+                </AuthGuard>
+              } />
+              <Route path="/settings" element={
+                <AuthGuard>
+                  <SettingsPage />
+                </AuthGuard>
+              } />
+              <Route path="/admin" element={
+                // TODO: Add AdminGuard
+                <AuthGuard>
+                  <AdminDashboard />
+                </AuthGuard>
+              } />
+              <Route path="/admin/email-automation" element={
+                <AuthGuard>
+                  <EmailAutomationPage />
+                </AuthGuard>
+              } />
+              <Route path="/admin/client/:id" element={
+                <AuthGuard>
+                  <ClientHistoryPage />
+                </AuthGuard>
+              } />
+              <Route path="/admin/campaigns" element={
+                <AuthGuard>
+                  <CampaignManagerPage />
+                </AuthGuard>
+              } />
+              <Route path="/admin/campaigns/new" element={
+                <AuthGuard>
+                  <CampaignWizard />
+                </AuthGuard>
+              } />
 
-            <Route path="/testimonial-demo" element={<TestimonialDemo />} />
-            <Route path="/shape-demo" element={<ShapeHeroDemo />} />
-            <Route path="/features/voice-bot" element={<VoiceBotFeaturesPage />} />
-            <Route path="/features/blog-agent" element={<BlogAgentFeaturesPage />} />
+              <Route path="/apply" element={<QuizLandingPage />} />
+              <Route path="/thank-you" element={<ThankYouPage />} />
+
+              <Route path="/testimonial-demo" element={<TestimonialDemo />} />
+              <Route path="/shape-demo" element={<ShapeHeroDemo />} />
+              <Route path="/features/voice-bot" element={<VoiceBotFeaturesPage />} />
+              <Route path="/features/blog-agent" element={<BlogAgentFeaturesPage />} />
 
 
-            {/* Push & Blog Routes */}
-            <Route path="/push/send" element={
-              <AuthGuard>
-                <PushNotificationPage />
-              </AuthGuard>
-            } />
-            <Route path="/push/tokens" element={
-              <AuthGuard>
-                <DeviceTokensPage />
-              </AuthGuard>
-            } />
+              {/* Push & Blog Routes */}
+              <Route path="/push/send" element={
+                <AuthGuard>
+                  <PushNotificationPage />
+                </AuthGuard>
+              } />
+              <Route path="/push/tokens" element={
+                <AuthGuard>
+                  <DeviceTokensPage />
+                </AuthGuard>
+              } />
 
 
-            <Route path="/blog-manager" element={
-              <AuthGuard>
-                <BlogManagerPage />
-              </AuthGuard>
-            } />
-            <Route path="/blogs/new" element={
-              <AuthGuard>
-                <BlogEditorPage />
-              </AuthGuard>
-            } />
-            <Route path="/blogs/edit/:id" element={
-              <AuthGuard>
-                <BlogEditorPage />
-              </AuthGuard>
-            } />
-          </Routes>
-          {!isDashboard && location.pathname !== '/' && <Footer />}
+              <Route path="/blog-manager" element={
+                <AuthGuard>
+                  <BlogManagerPage />
+                </AuthGuard>
+              } />
+              <Route path="/blogs/new" element={
+                <AuthGuard>
+                  <BlogEditorPage />
+                </AuthGuard>
+              } />
+              <Route path="/blogs/edit/:id" element={
+                <AuthGuard>
+                  <BlogEditorPage />
+                </AuthGuard>
+              } />
+            </Routes>
+            {!isDashboard && location.pathname !== '/' && <Footer />}
 
-        </div>
+          </div>
         </WorkspaceProvider>
       </AuthProvider>
     </ThemeProvider >
